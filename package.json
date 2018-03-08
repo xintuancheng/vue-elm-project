@@ -1,0 +1,10 @@
+{
+  "name": "vue-elm-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://chengxintuan@github.com/xintuancheng/vue-elm-project.git",
+  "author": "xintuancheng",
+  "license": "MIT",
+  "scripts": {
+  }
+}
