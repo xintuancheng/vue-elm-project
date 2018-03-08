@@ -31,7 +31,7 @@ const config = {
     },
     devServer: {
         host: 'localhost',
-        port: 8000,
+        port: 3300,
         contentBase: outpath
     },
     module: {
