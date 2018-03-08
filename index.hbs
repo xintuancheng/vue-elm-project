@@ -8,6 +8,11 @@
     <title>{{ htmlWebpackPlugin.options.title }}</title>
 </head>
 <body>
-<div class="vue">{{ htmlWebpackPlugin.options.title }}</div>
+<div id="app">
+    <router-view></router-view>
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+<script src="https://cdn.bootcss.com/vuex/3.0.1/vuex.js"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const rootPath = path.join(__dirname, '../');
 const srcPath = path.join(rootPath, 'src');
-const entryPath = path.join(srcPath, 'index.js');
+const entryPath = path.join(srcPath, 'main.js');
 const outpath = path.join(rootPath, 'build');
 
 const config = {
@@ -25,6 +25,10 @@ const config = {
         },
         extensions: [".vue", ".js", ".less", ".css", '.svg']
     },
+    externals: {
+        "vue": "Vue",
+        "vuex": "Vuex"
+    },
     devServer: {
         host: 'localhost',
         port: 8000,
@@ -35,6 +39,11 @@ const config = {
             {
                 test: /\.vue$/,
                 loader: 'vue-loader'
+            }, {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                include: rootPath,
+                exclude: /node_modules/
             }, {
                 test: /\.less$/,
                 use: ['style-loader', 'css-loader', 'less-loader'],
@@ -73,5 +82,3 @@ const config = {
 }
 
 module.exports = config;
-
-
