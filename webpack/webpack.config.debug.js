@@ -42,8 +42,8 @@ const config = {
             }, {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                include: rootPath,
-                exclude: /node_modules/
+                include: srcPath,
+                exclude: /(node_modules)/
             }, {
                 test: /\.less$/,
                 use: ['style-loader', 'css-loader', 'less-loader'],
