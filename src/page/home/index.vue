@@ -10,6 +10,9 @@
             return {
                 name: 'home'
             }
+        },
+        mounted() {
+
         }
     }
 </script>

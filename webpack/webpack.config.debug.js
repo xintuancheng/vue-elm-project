@@ -17,7 +17,7 @@ const config = {
         path: outpath,
         publicPath: ''
     },
-    devtool: "inline-source-map",
+    devtool: "#eval-source-map",
     resolve: {
         alias: {
             'util': path.join(srcPath, 'util'),

@@ -1,6 +1,6 @@
 <template>
     <div class="login-container">
-        <header-top :head-title="loginWay? '登录':'密码登录'" goBack="true"></header-top>
+        <header-top :headTitle="loginWay? '登录':'密码登录'" :goBack="true"></header-top>
     </div>
 </template>
 
@@ -25,7 +25,7 @@
                 alertText: null, //提示的内容
             }
         },
-        component: {
+        components: {
             headerTop
         }
     }

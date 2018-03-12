@@ -22,7 +22,7 @@
         data() {
             return {};
         },
-        prop: ['headTitle', 'signUp', 'goBack'],
+        props: ['signinUp', 'headTitle', 'goBack'],
         methods: {
             ...mapActions(['getUserInfo'])
         }
