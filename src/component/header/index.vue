@@ -29,24 +29,29 @@
     }
 </script>
 
-<style type="less">
+<style lang="less">
     #header-top {
         position: fixed;
         top: 0px;
         left: 0px;
         width: 100%;
-        height: 60px;
+        height: 40px;
         background: #3190e8;
         .head_goback {
-            left: 40px;
+            position: absolute;
+            left: 5px;
+            top: 10px;
             width: 60px;
             height: 40px;
             line-height: 40px;
+            float: left;
         }
         .title_head {
+            text-align: center;
+            line-height: 40px;
             .title_text {
-                text-align: center;
                 font-size: 16px;
+                color: #ffffff;
             }
         }
     }

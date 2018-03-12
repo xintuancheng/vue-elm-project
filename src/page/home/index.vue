@@ -17,7 +17,7 @@
     }
 </script>
 
-<style type="less">
+<style lang="less">
     .name {
         color: orangered;
     }
