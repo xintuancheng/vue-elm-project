@@ -23,3 +23,20 @@ export const getCurrentCityByid = (city_id) => {
     return axios.get(`${basePathV1}/cities/${city_id}`);
 }
 
+/**
+ * 返回实时的地址
+ * @param type
+ * @param city_id
+ * @param keyword
+ * @returns {AxiosPromise<any>}
+ */
+export const getPois = (type, keyword, city_id) => {
+    return axios.get(`${basePathV1}/pois`, {
+        params: {
+            type,
+            city_id,
+            keyword
+        }
+    });
+}
+

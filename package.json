@@ -6,7 +6,8 @@
   "author": "xintuancheng",
   "license": "MIT",
   "scripts": {
-    "debug": "./node_modules/.bin/webpack-dev-server --hot --inline --config webpack/webpack.config.debug.js"
+    "debug": "./node_modules/.bin/webpack-dev-server --hot --inline --config webpack/webpack.config.debug.js",
+    "build": "webpack --config webpack/webpack.config.debug.js"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.104",

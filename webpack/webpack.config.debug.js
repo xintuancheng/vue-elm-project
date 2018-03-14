@@ -13,7 +13,7 @@ const config = {
         'app': entryPath
     },
     output: {
-        filename: '[name].js',
+        filename: 'index.js',
         path: outpath,
         publicPath: ''
     },
