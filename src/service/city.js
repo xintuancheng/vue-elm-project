@@ -14,3 +14,12 @@ export const getCityBytype = (type) => {
     });
 }
 
+/**
+ * 根据当前城市的id搜索当前的城市
+ * @param city_id
+ * @returns {AxiosPromise<any>}
+ */
+export const getCurrentCityByid = (city_id) => {
+    return axios.get(`${basePathV1}/cities/${city_id}`);
+}
+
