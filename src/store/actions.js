@@ -1,10 +1,8 @@
-import {UserApi} from '../service/index';
-
-const userApi = new UserApi();
+import {getUserInfo, getCityBytype} from '../service/index';
 
 export default {
     async getUserInfo({commit, state}) {
-        const res = await userApi.getUserInfo();
+        const res = await getUserInfo();
 
         commit('GET_USERINFO', res);
     }

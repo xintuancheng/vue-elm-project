@@ -1,8 +1,8 @@
-import {GET_USERINFO} from './mutations-type';
+import {GET_USERINFO, RECORD_USERINFO} from './mutations-type';
+import {setStore} from "../util/util";
 
 export default {
     //获取用户信息存入vuex
-
     [GET_USERINFO](state, info) {
         if (state.userInfo && (state.userInfo.username !== info.username)) {
             return;
@@ -17,5 +17,11 @@ export default {
         } else {
             state.userInfo = null;
         }
+    },
+    // 记录用户信息
+    [RECORD_USERINFO](state, info) {
+        state.userInfo = info;
+        state.login = true;
+        setStore('user_id', info.user_id);
     }
 }

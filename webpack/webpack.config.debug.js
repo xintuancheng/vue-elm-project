@@ -32,7 +32,19 @@ const config = {
     devServer: {
         host: 'localhost',
         port: 3300,
-        contentBase: outpath
+        contentBase: outpath,
+        proxy: {
+            '/v1': {
+                target: 'http://cangdu.org:8001',
+                secure: false,
+                changeOrigin: true
+            },
+            '/v2': {
+                target: 'http://cangdu.org:8001',
+                secure: false,
+                changeOrigin: true
+            }
+        }
     },
     module: {
         rules: [

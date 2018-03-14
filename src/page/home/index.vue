@@ -1,24 +1,174 @@
 <template>
-    <div class="city">
-        <div class="name">{{name}}</div>
-    </div>
+    <section class="home">
+        <header-top signin-up='home'>
+            <span slot='logo' class="head_logo" @click="reload">ele.me</span>
+        </header-top>
+        <nav class="city_nav">
+            <div class="city_tip">
+                <span>当前定位城市：</span>
+                <span>定位不准时，请在城市列表中选择</span>
+            </div>
+            <router-link :to="'/city/' + guessCityid" class="guess_city">
+                <span>{{guessCity}}</span>
+                <div class="arrow_right"></div>
+            </router-link>
+        </nav>
+        <section id="hot_city_container">
+            <h4 class="city_title">热门城市</h4>
+            <ul class="citylistul clear">
+                <router-link tag="li" v-for="item in hotcity" :to="'/city/' + item.id" :key="item.id">
+                    {{item.name}}
+                </router-link>
+            </ul>
+        </section>
+        <section class="group_city_container">
+            <ul class="letter_classify">
+                <li v-for="(value, key, index) in sortgroupcity" :key="key" class="letter_classify_li">
+                    <h4 class="city_title">{{key}}
+                        <span v-if="index == 0">（按字母排序）</span>
+                    </h4>
+                    <ul class="groupcity_name_container citylistul clear">
+                        <router-link tag="li" v-for="item in value" :to="'/city/' + item.id" :key="item.id"
+                                     class="ellipsis">
+                            {{item.name}}
+                        </router-link>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </section>
 </template>
 
 <script>
+    import headerTop from '../../component/header';
+    import {getCityBytype} from '../../service/index';
+    import {getCitys} from '../../util/city';
+
     export default {
         data() {
             return {
-                name: 'home'
+                guessCity: '',   //当前城市
+                guessCityid: '', //当前城市id
+                hotcity: [],     //热门城市列表
+                groupcity: {},   //所有城市列表
             }
         },
         mounted() {
+            Promise.all([getCityBytype('guess'), getCityBytype('hot'), getCitys()]).then((res) => {
+                this.guessCity = res[0].data.name;
+                this.guessCityid = res[0].data.id;
+                this.hotcity = res[1].data;
+                this.groupcity = res[2];
+            });
+        },
+        components: {
+            headerTop
+        },
+        methods: {
+            reload() {
+                window.location.reload();
+            }
+        },
+        computed: {
+            sortgroupcity() {
+                const sortObj = {};
 
+                for (let i = 65; i <= 90; i++) {
+                    let code = String.fromCharCode(i);
+                    if (this.groupcity[code]) {
+                        sortObj[code] = this.groupcity[code];
+                    }
+                }
+
+                return sortObj;
+            }
         }
     }
 </script>
 
 <style lang="less">
-    .name {
-        color: orangered;
+    .home {
+        .head_logo {
+            font-weight: 400;
+            font-size: 16px;
+            color: #fff;
+            width: 30px;
+            height: 40px;
+            line-height: 40px;
+            margin-left: 10px;
+        }
+        .city_nav {
+            margin-top: 45px;
+            background: #ffffff;
+            .city_tip {
+                padding: 5px 15px 0px;
+                border-bottom: 1px solid #eeeeee;
+                height: 30px;
+                line-height: 30px;
+                margin-bottom: 5px;
+                span {
+                    display: inline-block;
+                    font-size: 14px;
+                }
+                span:nth-of-type(1) {
+                    float: left;
+                }
+                span:nth-of-type(2) {
+                    float: right;
+                }
+            }
+            .guess_city {
+                clear: both;
+                display: block;
+                text-decoration: none;
+                height: 30px;
+                line-height: 30px;
+                span {
+                    display: inline-block;
+                    padding-left: 15px;
+                    color: #3190e8;
+                    font-size: 18px;
+                }
+                .arrow_right {
+                    float: right;
+                    display: inline-block;
+                    margin-top: 7px;
+                    margin-right: 15px;
+                    width: 8px;
+                    height: 8px;
+                    border-right: 2px solid #999999;
+                    border-bottom: 2px solid #999999;
+                    transform: rotate(-45deg);
+                }
+            }
+        }
+        #hot_city_container {
+            .city_title {
+                height: 40px;
+                line-height: 40px;
+            }
+            .citylistul {
+                li {
+
+                }
+            }
+        }
+        .group_city_container {
+            .letter_classify {
+                .letter_classify_li {
+                    .city_title {
+
+                    }
+                    .groupcity_name_container {
+                        .ellipsis {
+
+                        }
+                    }
+                    .citylistul {
+
+                    }
+                }
+            }
+        }
     }
 </style>
