@@ -1,14 +1,13 @@
 import axios from 'axios';
 import {basePathV1, basePathV2} from './base';
+import {getStore} from '../util/util';
 
 /**
  * 获取用户信息
  */
 export const getUserInfo = () => {
     return axios.get(`${basePathV1}/user`, {
-        params: {
-            user_id: '4941'
-        }
+        params: {user_id: getStore('user_id')}
     });
 }
 

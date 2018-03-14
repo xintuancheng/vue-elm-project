@@ -144,14 +144,13 @@
                         background: #f1f1f1;
                         left: 0px;
                         top: -5px;
-                        transition: all 1s;
+                        transition: all .4s;
                         z-index: 1;
                         box-shadow: 0 0.02667rem 0.05333rem 0 rgba(0, 0, 0, .1);
                     }
                     .trans_to_right {
-                        right: 0px !important;
-                        left: auto;
-                        transition: all 1s;
+                        left: 100%;
+                        margin-left: -27px;
                     }
                 }
                 .change_to_text {

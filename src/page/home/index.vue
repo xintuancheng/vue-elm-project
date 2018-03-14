@@ -14,9 +14,9 @@
             </router-link>
         </nav>
         <section id="hot_city_container">
-            <h4 class="city_title">热门城市</h4>
+            <div class="city_title">热门城市</div>
             <ul class="citylistul clear">
-                <router-link tag="li" v-for="item in hotcity" :to="'/city/' + item.id" :key="item.id">
+                <router-link tag="li" v-for="item in hotcity" :to="'/city/' + item.id" :key="item.id" class="ellipsis">
                     {{item.name}}
                 </router-link>
             </ul>
@@ -24,9 +24,9 @@
         <section class="group_city_container">
             <ul class="letter_classify">
                 <li v-for="(value, key, index) in sortgroupcity" :key="key" class="letter_classify_li">
-                    <h4 class="city_title">{{key}}
+                    <div class="city_title">{{key}}
                         <span v-if="index == 0">（按字母排序）</span>
-                    </h4>
+                    </div>
                     <ul class="groupcity_name_container citylistul clear">
                         <router-link tag="li" v-for="item in value" :to="'/city/' + item.id" :key="item.id"
                                      class="ellipsis">
@@ -54,11 +54,17 @@
             }
         },
         mounted() {
-            Promise.all([getCityBytype('guess'), getCityBytype('hot'), getCitys()]).then((res) => {
-                this.guessCity = res[0].data.name;
-                this.guessCityid = res[0].data.id;
-                this.hotcity = res[1].data;
-                this.groupcity = res[2];
+            getCityBytype('guess').then((res) => {
+                this.guessCity = res.data.name;
+                this.guessCityid = res.data.id;
+            });
+
+            getCityBytype('hot').then((res) => {
+                this.hotcity = res.data;
+            });
+
+            getCitys().then((res) => {
+                this.groupcity = res;
             });
         },
         components: {
@@ -108,7 +114,7 @@
                 margin-bottom: 5px;
                 span {
                     display: inline-block;
-                    font-size: 14px;
+                    font-size: 12px;
                 }
                 span:nth-of-type(1) {
                     float: left;
@@ -143,32 +149,72 @@
             }
         }
         #hot_city_container {
-            .city_title {
-                height: 40px;
-                line-height: 40px;
-            }
-            .citylistul {
-                li {
-
-                }
-            }
+            background: #ffffff;
+            margin-bottom: 20px;
         }
         .group_city_container {
             .letter_classify {
+                padding: 0px;
+                margin: 0px;
                 .letter_classify_li {
+                    margin-bottom: 20px;
+                    background-color: #ffffff;
+                    border-bottom: 1px solid #e4e4e4;
+                    list-style: none;
                     .city_title {
 
                     }
                     .groupcity_name_container {
-                        .ellipsis {
-
+                        li {
+                            color: #333333;
                         }
-                    }
-                    .citylistul {
-
                     }
                 }
             }
+        }
+
+        .city_title {
+            height: 40px;
+            line-height: 40px;
+            padding: 0px 15px;
+            font-size: 15px;
+            border-bottom: 1px solid #dddddd;
+            margin-top: 10px;
+            background: #ffffff;
+        }
+
+        .citylistul:after {
+            content: '';
+            display: block;
+            clear: both;
+            height: 0px;
+        }
+
+        .citylistul {
+            padding: 0px;
+            margin: 0px;
+            li {
+                font-size: 14px;
+                background: #ffffff;
+                list-style: none;
+                float: left;
+                width: 25%;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                color: #3190e8;
+                border-bottom: 1px solid #e4e4e4;
+                border-right: 1px solid #e4e4e4;
+                box-sizing: border-box;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            /*li .ellipsis { !*超出部分加上省略号...*!*/
+                /*text-overflow: ellipsis;*/
+                /*white-space: nowrap;*/
+                /*overflow: hidden;*/
+            /*}*/
         }
     }
 </style>
