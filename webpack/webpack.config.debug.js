@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const rootPath = path.join(__dirname, '../');
 const srcPath = path.join(rootPath, 'src');
@@ -34,15 +35,11 @@ const config = {
         port: 3300,
         contentBase: outpath,
         proxy: {
-            '/v1': {
+            '/api': {
                 target: 'http://cangdu.org:8001',
                 secure: false,
-                changeOrigin: true
-            },
-            '/v2': {
-                target: 'http://cangdu.org:8001',
-                secure: false,
-                changeOrigin: true
+                changeOrigin: true,
+                pathRewrite: {"/api": ""}
             }
         }
     },
@@ -50,17 +47,23 @@ const config = {
         rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue-loader'
+                loader: 'vue-loader',
+                exclude: /node_modules/,
+                options: {
+                    loaders: {
+                        css: ExtractTextPlugin.extract({
+                            use: 'css-loader'
+                        }),
+                        less: ExtractTextPlugin.extract({
+                            use: ["css-loader", "less-loader"]
+                        })
+                    }
+                }
             }, {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 include: srcPath,
                 exclude: /(node_modules)/
-            }, {
-                test: /\.less$/,
-                use: ['style-loader', 'css-loader', 'less-loader'],
-                exclude: /(node_modules)/,
-                include: srcPath
             }, {
                 test: /\.(png|jpg|gif|svg)$/,
                 loader: 'file-loader',
@@ -77,7 +80,7 @@ const config = {
         new CleanWebpackPlugin(['build'], {
             root: rootPath, //一个根的绝对路径.
             verbose: true, //将log写到 console.
-            dry: true //不要删除任何东西，主要用于测试.
+            dry: false //不要删除任何东西，主要用于测试.
         }),
         //提取公共代码插件
         new webpack.optimize.CommonsChunkPlugin({
@@ -89,6 +92,10 @@ const config = {
             title: 'hello vue',
             template: 'index.hbs',
             filename: 'app.html'
+        }),
+        new ExtractTextPlugin({
+            filename: "style-[chunkhash:8].css",
+            allChunks: true
         })
     ]
 }

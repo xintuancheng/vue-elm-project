@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {basePathV1, basePathV2} from './base';
+import {basePath} from './base';
 
 /**
  * params: type,
@@ -9,7 +9,7 @@ import {basePathV1, basePathV2} from './base';
  * @returns {AxiosPromise<any>}
  */
 export const getCityBytype = (type) => {
-    return axios.get(`${basePathV1}/cities`, {
+    return axios.get(`${basePath}/v1/cities`, {
         params: {type}
     });
 }
@@ -20,7 +20,7 @@ export const getCityBytype = (type) => {
  * @returns {AxiosPromise<any>}
  */
 export const getCurrentCityByid = (city_id) => {
-    return axios.get(`${basePathV1}/cities/${city_id}`);
+    return axios.get(`${basePath}/v1/cities/${city_id}`);
 }
 
 /**
@@ -31,7 +31,7 @@ export const getCurrentCityByid = (city_id) => {
  * @returns {AxiosPromise<any>}
  */
 export const getPois = (type, keyword, city_id) => {
-    return axios.get(`${basePathV1}/pois`, {
+    return axios.get(`${basePath}/v1/pois`, {
         params: {
             type,
             city_id,

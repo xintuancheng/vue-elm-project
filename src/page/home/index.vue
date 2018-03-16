@@ -54,9 +54,6 @@
             }
         },
         mounted() {
-            Promise.all(getCityBytype('guess'),getCityBytype('hot') )
-
-
             getCityBytype('guess').then((res) => {
                 this.guessCity = res.data.name;
                 this.guessCityid = res.data.id;

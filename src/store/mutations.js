@@ -1,4 +1,4 @@
-import {GET_USERINFO, RECORD_USERINFO} from './mutations-type';
+import {GET_USERINFO, RECORD_USERINFO, SAVE_GEOHASH, RECORD_ADDRESS} from './mutations-type';
 import {setStore} from "../util/util";
 
 export default {
@@ -23,5 +23,15 @@ export default {
         state.userInfo = info;
         state.login = true;
         setStore('user_id', info.user_id);
+    },
+    [SAVE_GEOHASH](state, geohash) {
+        state.geohash = geohash;
+    },
+    [RECORD_ADDRESS](state, {
+        latitude,
+        longitude
+    }) {
+        state.latitude = latitude;
+        state.longitude = longitude;
     }
 }

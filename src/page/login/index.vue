@@ -1,6 +1,6 @@
 <template>
     <div class="login-container">
-        <header-top :headTitle="logina" :goBack="true"></header-top>
+        <header-top :headTitle="'登陆'" :goBack="true"></header-top>
         <form class="login_form">
             <section class="input_container">
                 <input type="text" placeholder="账号" v-model.lazy="userAccount"/>

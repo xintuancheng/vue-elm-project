@@ -28,7 +28,7 @@
 <script>
     import headerTop from '../../component/header';
     import {getCurrentCityByid, getPois} from '../../service/city';
-    import {getStore, setStore} from '../../util/util';
+    import {getStore, setStore, removeStore} from '../../util/util';
 
     export default {
         mounted() {
@@ -38,6 +38,8 @@
             getCurrentCityByid(this.cityid).then((res) => {
                 this.cityname = res.data.name;
             });
+
+            this.initData();
         },
         data() {
             return {
@@ -54,6 +56,15 @@
             headerTop
         },
         methods: {
+            initData() {
+                const history = getStore('placeHistory');
+
+                if (history) {
+                    this.placelist = JSON.parse(history);
+                } else {
+                    this.placelist = [];
+                }
+            },
             changecity() {
                 this.$router.go(-1);
             },
@@ -70,9 +81,11 @@
 
                 if (res.data.message) {
                     this.historytitle = true;
+                    this.placeNone = false;
                 } else {
                     this.historytitle = false;
                     this.placelist = res.data;
+                    this.placeNone = res.data.length ? false : true;
                 }
             },
             /**
@@ -85,24 +98,25 @@
                 let currentPlace = this.placelist[index];
 
                 if (history) {
-                    let historyObj = JSON.parse(history);
+                    this.placeHistory = JSON.parse(history);
 
-                    const isRepeat = historyObj.some((item) => {
+                    const isRepeat = this.placeHistory.some((item) => {
                         return item.geohash === geohash;
                     });
 
                     if (!isRepeat) {
-                        this.placelist.push(currentPlace);
+                        this.placeHistory.push(currentPlace);
                     }
                 } else {
-                    this.placelist.push(currentPlace);
+                    this.placeHistory.push(currentPlace);
                 }
 
-                setStore('placeHistory', this.placelist);
+                setStore('placeHistory', this.placeHistory);
                 this.$router.push({path: '/msite', query: {geohash}});
             },
             clearAll() {
-
+                removeStore('placeHistory');
+                this.initData();
             }
         }
     }
@@ -110,6 +124,7 @@
 
 <style lang="less">
     .city_container {
+        padding-top: 50px;
         .changecity_logo {
             position: absolute;
             top: 10px;
@@ -118,9 +133,9 @@
             font-size: 14px;
         }
         .form-city {
-            margin-top: 50px;
             background: #ffffff;
             padding-bottom: 10px;
+            border-bottom: 1px solid #dddddd;
             .input_container {
                 padding: 15px 0px;
                 input {
@@ -151,7 +166,7 @@
         }
         .search_history_container {
             .history_title {
-                margin: 10px 0px;
+                margin: 10px 0px 0px;
                 padding: 0px 10px 10px;
                 color: #666666;
                 border-bottom: 1px solid #dddddd;
@@ -160,6 +175,7 @@
                 .getpois_ul {
                     padding: 0px;
                     background: #ffffff;
+                    margin: 0px;
                     li {
                         display: block;
                         padding: 20px;
@@ -179,6 +195,14 @@
                         }
                     }
                 }
+            }
+            .clear_all_history, .search_none_place {
+                text-align: center;
+                height: 40px;
+                line-height: 40px;
+                width: 100%;
+                font-size: 16px;
+                background: #ffffff;
             }
         }
     }

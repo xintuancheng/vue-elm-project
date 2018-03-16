@@ -7,6 +7,7 @@ const balance = r => require.ensure([], () => r(require('../page/balance')), 'ba
 const login = r => require.ensure([], () => r(require('../page/login')), 'login');
 const shop = r => require.ensure([], () => r(require('../page/shop')), 'shop');
 const city = r => require.ensure([], () => r(require('../page/city')), 'city');
+const msite = r => require.ensure([], () => r(require('../page/msite')), 'msite');
 
 // 懒加载
 export default [{
@@ -37,5 +38,8 @@ export default [{
         }, {
             path: '/shop',
             component: shop
+        }, {
+            path: '/msite',
+            component: msite
         }]
 }];
